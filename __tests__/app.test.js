@@ -49,5 +49,13 @@ describe('demo routes', () => {
     expect(res.body).toEqual({ ...frogger, size: 'medium' });
   });
 
+  it('deletes an existing frog by id', async () => {
+    const frog = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
 
+    const res = await request(app).delete(`/api/v1/frogs/${frog.id}`);
+
+    expect(res.body).toEqual({
+      message: `${frog.name} has been deleted!`
+    });
+  });
 });
