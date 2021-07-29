@@ -39,4 +39,15 @@ describe('demo routes', () => {
     expect(res.body).toEqual(frogger);
   });
 
+  it('updates a frog by id via GET', async () => {
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'medium' });
+
+    const res = await request(app)
+      .put(`/api/v1/frogs/${frogger.id}`)
+      .send({ size: 'medium' });
+
+    expect(res.body).toEqual({ ...frogger, size: 'medium' });
+  });
+
+
 });
