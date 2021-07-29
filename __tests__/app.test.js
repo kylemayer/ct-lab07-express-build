@@ -2,6 +2,7 @@ import pool from '../lib/utils/pool.js';
 import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
+import Frogs from '../lib/models/Frogs';
 
 describe('demo routes', () => {
   beforeEach(() => {
@@ -18,5 +19,16 @@ describe('demo routes', () => {
     });
   });
 
+  it('returns all frogs via GET', async () => {
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
+    const frogeth = await Frogs.insert({ name: 'frogeth', color: 'blue', size: 'medium'});
+    const frogella = await Frogs.insert({ name: 'frogella', color: 'red', size: 'small'});
+
+    return request(app)
+      .get('/api/v1/frogs')
+      .then((res) => {
+        expect(res.body).toEqual([frogger, frogeth, frogella]);
+      });
+  });
 
 });
