@@ -21,14 +21,22 @@ describe('demo routes', () => {
 
   it('returns all frogs via GET', async () => {
     const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
-    const frogeth = await Frogs.insert({ name: 'frogeth', color: 'blue', size: 'medium'});
-    const frogella = await Frogs.insert({ name: 'frogella', color: 'red', size: 'small'});
+    const frogeth = await Frogs.insert({ name: 'frogeth', color: 'blue', size: 'medium' });
+    const frogella = await Frogs.insert({ name: 'frogella', color: 'red', size: 'small' });
 
     return request(app)
       .get('/api/v1/frogs')
       .then((res) => {
         expect(res.body).toEqual([frogger, frogeth, frogella]);
       });
+  });
+
+  it('returns a single frog by id via GET', async () => {
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
+
+    const res = await request(app).get(`/api/v1/frogs/${frogger.id}`);
+
+    expect(res.body).toEqual(frogger);
   });
 
 });
