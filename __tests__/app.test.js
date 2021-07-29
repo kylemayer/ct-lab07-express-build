@@ -40,7 +40,7 @@ describe('demo routes', () => {
   });
 
   it('updates a frog by id via GET', async () => {
-    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'medium' });
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
 
     const res = await request(app)
       .put(`/api/v1/frogs/${frogger.id}`)
