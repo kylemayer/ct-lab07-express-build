@@ -58,4 +58,15 @@ describe('demo routes', () => {
       message: `${frog.name} has been deleted!`
     });
   });
+
+  it('POST a frog and return a gif', async () => {
+    const frogger = { name: 'frogger', color: 'green', size: 'tiny' };
+    const res = await request(app).post('/api/v1/frogs').send(frogger);
+
+    expect(res.body).toEqual({
+      id: '1',
+      gif: expect.any(String),
+      ...frogger
+    });
+  });
 });
