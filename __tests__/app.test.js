@@ -9,20 +9,10 @@ describe('demo routes', () => {
     return setup(pool);
   });
 
-  it('creates a single frog via POST', async () => {
-    const frogger = { name: 'frogger', color: 'green', size: 'tiny' };
-    const res = await request(app).post('/api/v1/frogs').send(frogger);
-
-    expect(res.body).toEqual({
-      id: '1',
-      ...frogger
-    });
-  });
-
   it('returns all frogs via GET', async () => {
-    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
-    const frogeth = await Frogs.insert({ name: 'frogeth', color: 'blue', size: 'medium' });
-    const frogella = await Frogs.insert({ name: 'frogella', color: 'red', size: 'small' });
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny', gif: expect.any(String) });
+    const frogeth = await Frogs.insert({ name: 'frogeth', color: 'blue', size: 'medium', gif: expect.any(String) });
+    const frogella = await Frogs.insert({ name: 'frogella', color: 'red', size: 'small', gif: expect.any(String) });
 
     return request(app)
       .get('/api/v1/frogs')
@@ -32,7 +22,7 @@ describe('demo routes', () => {
   });
 
   it('returns a single frog by id via GET', async () => {
-    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny', gif: expect.any(String) });
 
     const res = await request(app).get(`/api/v1/frogs/${frogger.id}`);
 
@@ -40,7 +30,7 @@ describe('demo routes', () => {
   });
 
   it('updates a frog by id via GET', async () => {
-    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
+    const frogger = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny', gif: expect.any(String) });
 
     const res = await request(app)
       .put(`/api/v1/frogs/${frogger.id}`)
@@ -50,7 +40,7 @@ describe('demo routes', () => {
   });
 
   it('deletes an existing frog by id', async () => {
-    const frog = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny' });
+    const frog = await Frogs.insert({ name: 'frogger', color: 'green', size: 'tiny', gif: expect.any(String) });
 
     const res = await request(app).delete(`/api/v1/frogs/${frog.id}`);
 
